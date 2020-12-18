@@ -18,35 +18,42 @@ namespace CalculatorLibrary
             return leftNumber * rightNumber;
         }
 
+        
         public decimal Divide(decimal leftNumber, decimal rightNumber)
         {
-            //if (rightNumber != 0)
-            //{
-            //    return leftNumber * rightNumber;
-            //}
-            //else
-            //{
-            //    return Double.NaN;
-            //}
-
-            return leftNumber/rightNumber;
+            try
+            {
+                return leftNumber / rightNumber;
+            }
+            catch (DivideByZeroException)
+            {
+                throw new DivideByZeroException("Can't divide by zero");
+            }
             
         }
 
-        public decimal OperatorSwitch(string optr, decimal leftNumber, decimal rightNumber)
+        public string OperatorSwitch(string optr, decimal leftNumber, decimal rightNumber)
         {
+ 
             switch (optr)
             {
                 case "+":
-                    return Add(leftNumber, rightNumber);
+                    return Add(leftNumber, rightNumber).ToString("0.####");
                 case "-":
-                    return Subtract(leftNumber, rightNumber);
+                    return Subtract(leftNumber, rightNumber).ToString("0.####");
                 case "*":
-                    return Multiply(leftNumber, rightNumber);
+                    return Multiply(leftNumber, rightNumber).ToString("0.####");
                 case "/":
-                    return Divide(leftNumber, rightNumber);
+                    try
+                    {
+                        return Divide(leftNumber, rightNumber).ToString("0.####");
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        return "Error: Can't divide by zero";
+                    }
                 default:
-                    return Add(leftNumber, rightNumber);
+                    return Add(leftNumber, rightNumber).ToString("0.####");
             }
         }
 

@@ -26,7 +26,7 @@ namespace finalProject.Controllers
 
             try
             {
-                ViewBag.result = sc.OperatorSwitch(exp.operator_symbol, exp.operand1, exp.operand2).ToString("0.####");
+                ViewBag.result = sc.OperatorSwitch(exp.operator_symbol, exp.operand1, exp.operand2);
             }catch(DivideByZeroException de)
             {
                 Console.WriteLine(de.Message);
