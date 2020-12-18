@@ -1,0 +1,49 @@
+﻿@model finalProject.Models.ExpressionModel
+@{
+    ViewData["Title"] = "Calculator";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "Add",
+        Value = "+",
+        Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Subtract",
+        Value = "-"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Multiply",
+        Value = "*"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Divide",
+        Value = "/"
+    });
+}
+
+<div class="text-center">
+    <h1 class="display-4">Calculator</h1>
+    <div class="row">
+        <div class="col-lg-4 col-sm-1"></div>
+        <div class="col-lg-4 col-sm-10">
+            @using (Html.BeginForm())
+            {
+                @Html.TextBoxFor(b => b.operand1, new { @class = "form-control", placeholder = "Enter First Number", value = ViewBag.operand1 })
+                <br />
+                @Html.TextBoxFor(b => b.operand2, new { @class = "form-control", placeholder = "Enter Second Number" })
+                <br />
+                @Html.DropDownListFor(b => b.operator_symbol, listItems, "Select Operator", new { @class = "form-control", value = ViewBag.operator_symbol })
+                <br />
+                <button class="btn btn-primary" type="submit">Calculate</button>
+            }
+        </div>
+        <div class="col-lg-4 col-sm-1"></div>
+    </div>
+    <br />
+    <h1>@ViewBag.result</h1>
+</div>
