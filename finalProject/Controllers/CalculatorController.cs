@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using finalProject.Models;
-
+using CalculatorLibrary;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace finalProject.Controllers
 {
     public class CalculatorController : Controller
     {
+
+        SimpleCalc sc = new SimpleCalc();
+
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -24,31 +24,19 @@ namespace finalProject.Controllers
             ViewBag.operand2 = exp.operand2;
             ViewBag.operator_symbol = exp.operator_symbol;
 
-            switch (exp.operator_symbol)
+            try
             {
-                case "+":
-                    ViewBag.result = (exp.operand1 + exp.operand2).ToString("0.####");
-                    break;
-                case "-":
-                    ViewBag.result = (exp.operand1 - exp.operand2).ToString("0.####");
-                    break;
-                case "*":
-                    ViewBag.result = (exp.operand1 * exp.operand2).ToString("0.####");
-                    break;
-                case "/":
-                    if (exp.operand2 != 0)
-                    {
-                        ViewBag.result = (exp.operand1 / exp.operand2).ToString("0.#######");
-                    }
-                    else
-                    {
-                        ViewBag.result = "Error : Can't Divide by zero";
-                    }
-                    break;
-                default:
-                    ViewBag.result = (exp.operand1 + exp.operand2).ToString("0.####");
-                    break;
+                ViewBag.result = sc.OperatorSwitch(exp.operator_symbol, exp.operand1, exp.operand2).ToString("0.####");
+            }catch(DivideByZeroException de)
+            {
+                Console.WriteLine(de.Message);
+                ViewBag.result = "Error: Invalid divisor";
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ViewBag.result = "Invalid Inputs";
             }
+            
             return View();
         }
     }
